@@ -8,6 +8,8 @@ import { Home } from "./components/Home";
 // - 나머지는 lazy load
 // - Contact는 진입 시점에만 Supabase 클라이언트 초기화
 const Services = lazy(() => import("./components/Services").then((m) => ({ default: m.Services })));
+const Blog     = lazy(() => import("./components/Blog").then((m) => ({ default: m.Blog })));
+const Pricing  = lazy(() => import("./components/Pricing").then((m) => ({ default: m.Pricing })));
 const About    = lazy(() => import("./components/About").then((m) => ({ default: m.About })));
 const Contact  = lazy(() => import("./components/Contact").then((m) => ({ default: m.Contact })));
 const Terms    = lazy(() => import("./components/Terms").then((m) => ({ default: m.Terms })));
@@ -33,6 +35,8 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: Home },
       { path: "services", element: <Lazy><Services /></Lazy> },
+      { path: "blog",     element: <Lazy><Blog /></Lazy> },
+      { path: "pricing",  element: <Lazy><Pricing /></Lazy> },
       { path: "about",    element: <Lazy><About /></Lazy> },
       { path: "contact",  element: <Lazy><Contact /></Lazy> },
       { path: "terms",    element: <Lazy><Terms /></Lazy> },
