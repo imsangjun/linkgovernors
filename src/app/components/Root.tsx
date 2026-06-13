@@ -33,7 +33,9 @@ function BrandMark({ size = "base" }: { size?: "base" | "sm" }) {
 ─────────────────────────────────────────────────── */
 const NAV = [
   { to: "/services", label: "서비스" },
-  { to: "/about", label: "회사" },
+  { to: "/blog", label: "블로그" },
+  { to: "/pricing", label: "요금제" },
+  // { to: "/cases", label: "케이스 스터디" }, // 향후 사례 누적 후 활성화
   { to: "/contact", label: "문의" },
 ];
 
@@ -98,9 +100,10 @@ export function Root() {
           <div className="hidden md:block">
             <Link
               to="/contact"
-              className="inline-flex items-center h-9 px-4 text-[13px] font-medium bg-[#f0f0f0] text-[#0a0a0a] rounded-full hover:bg-[#e0e0e0] transition-colors"
+              className="group inline-flex items-center gap-2 h-9 px-4 text-[13px] font-medium bg-[#f0f0f0] text-[#0a0a0a] rounded-md hover:bg-[#e0e0e0] transition-colors"
             >
-              무료 도메인 진단
+              무료 진단
+              <span aria-hidden className="transition-transform group-hover:translate-x-0.5">→</span>
             </Link>
           </div>
 
@@ -136,9 +139,10 @@ export function Root() {
               ))}
               <Link
                 to="/contact"
-                className="mt-4 block w-full text-center px-4 py-3.5 rounded-full bg-[#f0f0f0] text-[#0a0a0a] text-[14px] font-medium"
+                className="mt-4 inline-flex items-center justify-center gap-2 w-full px-4 py-3.5 rounded-md bg-[#f0f0f0] text-[#0a0a0a] text-[14px] font-medium"
               >
-                무료 도메인 진단
+                무료 진단
+                <span aria-hidden>→</span>
               </Link>
             </div>
           </div>
