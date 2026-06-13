@@ -206,17 +206,37 @@ function Footer() {
         <div className="rule pt-8">
           <BrandMark size="sm" />
           <div className="mt-5 text-[12px] text-[#5a5a5a] space-y-1.5 leading-relaxed">
-            <p>대표자: 홍길동 &nbsp;|&nbsp; 사업자등록번호: 000-00-00000</p>
-            <p>소재지: 서울특별시 ○○구 ○○로 00, 0층</p>
-            <p>이메일: <a href="mailto:hello@linkpresso.kr" className="hover:text-[#c8c8c8] underline underline-offset-2">hello@linkpresso.kr</a></p>
+            <p>대표자: 이영민 &nbsp;|&nbsp; 사업자 등록번호: 458-87-03871</p>
+            <p>소재지: 인하대학교 인하드림센터 1관 608호</p>
+            <p>
+              이메일:{" "}
+              <a
+                href="mailto:likkoreaofficial@gmail.com"
+                className="hover:text-[#c8c8c8] underline underline-offset-2"
+              >
+                likkoreaofficial@gmail.com
+              </a>
+            </p>
+            <p>
+              인스타그램:{" "}
+              <a
+                href="https://www.instagram.com/linkgovernours/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#c8c8c8] underline underline-offset-2"
+              >
+                openviral_space
+              </a>
+            </p>
+            <p>개인정보관리책임자: 임상준 &nbsp;|&nbsp; 호스팅제공자: Vercel</p>
           </div>
           <div className="mt-6 pt-6 rule flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5">
             <div className="flex items-center gap-4">
               <Link to="/terms" className="text-[12px] text-[#5a5a5a] hover:text-[#c8c8c8] underline underline-offset-2">이용약관</Link>
-              <span className="text-[#3a3a3a] text-[12px]">·</span>
+              <span className="text-[#3a3a3a] text-[12px]">/</span>
               <Link to="/privacy" className="text-[12px] text-[#5a5a5a] hover:text-[#c8c8c8] underline underline-offset-2">개인정보처리방침</Link>
             </div>
-            <span className="sm:ml-auto text-[12px] text-[#5a5a5a]">© 2026 LinkPresso. All rights reserved.</span>
+            <span className="sm:ml-auto text-[12px] text-[#5a5a5a]">© 2026 LIK. All rights reserved.</span>
           </div>
         </div>
       </div>
