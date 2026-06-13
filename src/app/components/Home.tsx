@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
 import { useRevealOnScroll } from "../lib/useRevealOnScroll";
 import { StringMesh } from "./StringMesh";
+import { ScrollReveal } from "./ScrollReveal";
 
 export function Home() {
   useRevealOnScroll();
@@ -11,6 +12,7 @@ export function Home() {
       <Hero />
       <StringMesh />
       <Philosophy />
+      <ScrollReveal />
       <ServicesPreview />
       <Process />
       <FAQ />
