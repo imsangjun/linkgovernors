@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://linkgovernors.kr/sitemap.xml

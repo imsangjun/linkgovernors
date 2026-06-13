@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- 다크 모드 강제: 사용자 OS 설정과 무관하게 항상 검정 배경 -->
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="supported-color-schemes" content="dark" />
+
+    <meta name="description" content="LinkPresso는 백링크와 SEO 실행을 통해 검색 권위를 설계합니다. 측정 가능한 결과, 가이드라인 준수, 장기적 신뢰 구축." />
+    <meta property="og:title" content="LinkPresso — 검색 권위를 설계합니다" />
+    <meta property="og:description" content="우연한 트래픽이 아닌, 측정 가능한 권위를 구축합니다." />
+    <meta property="og:type" content="website" />
+    <title>LinkPresso — 검색 권위를 설계합니다</title>
+
+    <!-- FOUC 방지: React 마운트 전 검정 배경 즉시 적용 -->
+    <style>
+      html, body {
+        background: #0a0a0a;
+        color-scheme: dark;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
