@@ -56,7 +56,7 @@ export function StringMesh() {
 
       {/* 캡션 — 무엇을 보고 있는지 살짝 알려줌 */}
       <div className="pointer-events-none absolute left-5 md:left-8 bottom-6 md:bottom-8 flex items-center gap-3">
-        <span className="w-1.5 h-1.5 rounded-full bg-[#00ff00]" />
+        <span className="w-1.5 h-1.5 rounded-full bg-[#00c800]" />
         <span className="text-[11px] md:text-[12px] font-mono uppercase tracking-[0.12em] text-[#8e8e8e]">
           링크 그래프 시뮬레이션 — 마우스로 끌어보세요
         </span>
@@ -346,7 +346,7 @@ function runSimulation(container: HTMLElement): () => void {
     octx.font = `600 ${fontSize}px ui-monospace, "SF Mono", "JetBrains Mono", monospace`;
     octx.textAlign = "center";
     octx.textBaseline = "middle";
-    octx.fillStyle = "#00ff00";
+    octx.fillStyle = "#00c800";
     octx.fillText(ch, size / 2, size / 2);
     accentChars[ch] = off;
   }

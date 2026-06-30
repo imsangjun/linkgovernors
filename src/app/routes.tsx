@@ -9,7 +9,9 @@ import { Home } from "./components/Home";
 // - Contact는 진입 시점에만 Supabase 클라이언트 초기화
 const Services = lazy(() => import("./components/Services").then((m) => ({ default: m.Services })));
 const Blog     = lazy(() => import("./components/Blog").then((m) => ({ default: m.Blog })));
+const BlogPost = lazy(() => import("./components/BlogPost").then((m) => ({ default: m.BlogPost })));
 const Pricing  = lazy(() => import("./components/Pricing").then((m) => ({ default: m.Pricing })));
+const Cases    = lazy(() => import("./components/Cases").then((m) => ({ default: m.Cases })));
 const About    = lazy(() => import("./components/About").then((m) => ({ default: m.About })));
 const Contact  = lazy(() => import("./components/Contact").then((m) => ({ default: m.Contact })));
 const Terms    = lazy(() => import("./components/Terms").then((m) => ({ default: m.Terms })));
@@ -19,7 +21,7 @@ const NotFound = lazy(() => import("./components/NotFound").then((m) => ({ defau
 function RouteFallback() {
   return (
     <div className="min-h-[60vh] flex items-center justify-center">
-      <div className="w-1.5 h-1.5 rounded-full bg-[#00ff00] animate-pulse" />
+      <div className="w-1.5 h-1.5 rounded-full bg-[#00c800] animate-pulse" />
     </div>
   );
 }
@@ -35,8 +37,10 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: Home },
       { path: "services", element: <Lazy><Services /></Lazy> },
-      { path: "blog",     element: <Lazy><Blog /></Lazy> },
+      { path: "blog",      element: <Lazy><Blog /></Lazy> },
+      { path: "blog/:slug", element: <Lazy><BlogPost /></Lazy> },
       { path: "pricing",  element: <Lazy><Pricing /></Lazy> },
+      { path: "cases",    element: <Lazy><Cases /></Lazy> },
       { path: "about",    element: <Lazy><About /></Lazy> },
       { path: "contact",  element: <Lazy><Contact /></Lazy> },
       { path: "terms",    element: <Lazy><Terms /></Lazy> },

@@ -3,7 +3,7 @@
 /* ───────────────────────────────────────────────────
    LinkPresso Design Tokens
    - 베이스: 검정 배경 + 흰 텍스트 (다크 모드 전용)
-   - 강조: #00ff00 — "온점" 수준으로만 사용
+   - 강조: #00c800 — "온점" 수준으로만 사용
    - 사용자 OS의 라이트/다크 설정과 무관하게 항상 동일한 디자인
 ─────────────────────────────────────────────────── */
 
@@ -27,7 +27,7 @@
   --color-ink-900: #f0f0f0;  /* 메인 텍스트 (가장 밝은 흰색) */
 
   /* The single accent dot */
-  --color-accent: #00ff00;
+  --color-accent: #00c800;
 
   /* Surfaces */
   --color-surface: #0a0a0a;
@@ -216,6 +216,14 @@ input[type="search"]::-webkit-search-cancel-button {
   color: var(--color-ink-600);
 }
 
+/* 은은한 입체감 — 어두운 배경 위 밝은 텍스트에 살짝 떠 있는 느낌 */
+.text-3d {
+  text-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.55),
+    0 2px 3px rgba(0, 0, 0, 0.45),
+    0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
 .dot-accent {
   display: inline-block;
   width: 0.45em;
@@ -231,7 +239,7 @@ input[type="search"]::-webkit-search-cancel-button {
    Reveal animation
 ─────────────────────────────────────────────────── */
 @keyframes reveal-up {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -239,7 +247,7 @@ input[type="search"]::-webkit-search-cancel-button {
   opacity: 0;
 }
 .reveal.in {
-  animation: reveal-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  animation: reveal-up 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
 }
 
 /* prefers-reduced-motion: 애니메이션 최소화 사용자 배려 (다크 강제와 별개로 접근성 유지) */

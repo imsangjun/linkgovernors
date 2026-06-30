@@ -10,11 +10,56 @@
     <meta name="theme-color" content="#0a0a0a" />
     <meta name="supported-color-schemes" content="dark" />
 
-    <meta name="description" content="LinkPresso는 백링크와 SEO 실행을 통해 검색 권위를 설계합니다. 측정 가능한 결과, 가이드라인 준수, 장기적 신뢰 구축." />
-    <meta property="og:title" content="LinkPresso — 검색 권위를 설계합니다" />
-    <meta property="og:description" content="우연한 트래픽이 아닌, 측정 가능한 권위를 구축합니다." />
+    <meta name="description" content="단순히 보기 좋은 웹사이트를 넘어, 검색에 강한 웹사이트를 제작합니다. 링크프레소는 SEO 구조를 처음부터 설계에 반영하는 웹빌드 솔루션을 제공합니다." />
+    <meta property="og:title" content="웹사이트 제작·개발 전문 링크프레소 | 검색까지 고려한 웹빌드" />
+    <meta property="og:description" content="단순히 보기 좋은 웹사이트를 넘어, 검색에 강한 웹사이트를 제작합니다. 링크프레소는 SEO 구조를 처음부터 설계에 반영하는 웹빌드 솔루션을 제공합니다." />
     <meta property="og:type" content="website" />
-    <title>LinkPresso — 검색 권위를 설계합니다</title>
+    <meta property="og:site_name" content="링크프레소" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:url" content="https://linkpresso.kr/" />
+    <meta property="og:image" content="https://linkpresso.kr/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="링크프레소 검색까지 고려한 웹빌드" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="웹사이트 제작·개발 전문 링크프레소 | 검색까지 고려한 웹빌드" />
+    <meta name="twitter:description" content="단순히 보기 좋은 웹사이트를 넘어, 검색에 강한 웹사이트를 제작합니다." />
+    <meta name="twitter:image" content="https://linkpresso.kr/og.png" />
+    <title>웹사이트 제작·개발 전문 링크프레소 | 검색까지 고려한 웹빌드</title>
+
+    <!-- 구조화 데이터 (Organization + WebSite) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://linkpresso.kr/#organization",
+            "name": "링크프레소",
+            "alternateName": "LinkPresso",
+            "url": "https://linkpresso.kr",
+            "logo": "https://linkpresso.kr/og.png",
+            "email": "likkoreaofficial@gmail.com",
+            "foundingDate": "2024",
+            "description": "SEO와 웹사이트 개발을 전문으로 하는 에이전시. 검색에 강한 웹 환경을 구축합니다.",
+            "address": {
+              "@type": "PostalAddress",
+              "addressCountry": "KR",
+              "addressLocality": "인천",
+              "streetAddress": "인하대학교 인하드림센터 1관 608호"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://linkpresso.kr/#website",
+            "name": "링크프레소",
+            "url": "https://linkpresso.kr",
+            "inLanguage": "ko-KR",
+            "publisher": { "@id": "https://linkpresso.kr/#organization" }
+          }
+        ]
+      }
+    </script>
 
     <!-- FOUC 방지: React 마운트 전 검정 배경 즉시 적용 -->
     <style>

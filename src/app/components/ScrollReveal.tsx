@@ -148,7 +148,7 @@ export function ScrollReveal() {
                           style={{
                             opacity: 0.18,
                             transition: "opacity 0.05s linear",
-                            color: isAccent ? "#00ff00" : "#f0f0f0",
+                            color: isAccent ? "#00c800" : "#f0f0f0",
                             // inline (inline-block 아님) — 줄바꿈이 띄어쓰기 기준 자연스러움
                             willChange: "opacity",
                           }}

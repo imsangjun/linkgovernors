@@ -4,7 +4,7 @@ const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
 
 // env 미설정 시에도 빌드는 되도록 lazy 처리
-// 실제 호출 시점에 throw — 개발 단계에서 명확히 인지 가능
+// 실제 호출 시점에 throw 개발 단계에서 명확히 인지 가능
 export const supabase = url && anonKey
   ? createClient(url, anonKey)
   : null;

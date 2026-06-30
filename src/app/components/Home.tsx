@@ -1,5 +1,7 @@
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
-import { ArrowUpRight, ArrowRight } from "lucide-react";
+import { ArrowUpRight, ArrowRight, Search, Target, Zap, RefreshCw } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useRevealOnScroll } from "../lib/useRevealOnScroll";
 import { StringMesh } from "./StringMesh";
 import { ScrollReveal } from "./ScrollReveal";
@@ -11,7 +13,6 @@ export function Home() {
     <>
       <Hero />
       <StringMesh />
-      <Philosophy />
       <ScrollReveal />
       <ServicesPreview />
       <Process />
@@ -24,28 +25,17 @@ export function Home() {
 /* ───────────────────────────────────────────────────
    HERO
    - 첫 화면이 인상이다. 빨간 점은 nav 로고에만 있고
-     본문에는 일절 없도록 — "온점 1개" 약속 지키기.
+     본문에는 일절 없도록 "온점 1개" 약속 지키기.
 ─────────────────────────────────────────────────── */
 function Hero() {
   return (
-    <section className="relative">
+    <section className="relative reveal">
       <div className="max-w-[1280px] mx-auto px-5 md:px-8 pt-12 md:pt-20 pb-20 md:pb-28">
-        {/* Eyebrow */}
-        <div className="reveal mb-8 md:mb-12">
-          <span className="inline-flex items-center gap-3 eyebrow">
-            <span aria-hidden>[</span>
-            <span>SEO · 백링크 · 웹페이지</span>
-            <span className="h-px w-6 bg-[#f0f0f0]" />
-            <span>실행 전문</span>
-            <span aria-hidden>]</span>
-          </span>
-        </div>
-
         {/* Display headline */}
-        <h1 className="reveal h-display !leading-[0.92] text-[44px] sm:text-[64px] md:text-[88px] lg:text-[104px] max-w-[16ch] ko">
-          검색 권위는<br />
+        <h1 className="reveal h-display text-3d !leading-[0.92] text-[44px] sm:text-[64px] md:text-[88px] lg:text-[104px] max-w-[16ch] ko">
+          상위 노출은<br />
           우연이 아니라<br />
-          <span className="text-[#8e8e8e]">설계의</span> 결과입니다
+          <span className="text-[#00c800]">설계의</span> 결과입니다
         </h1>
 
         {/* Sub */}
@@ -65,73 +55,130 @@ function Hero() {
             <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
           <Link
-            to="/about"
+            to="/services"
             className="inline-flex items-center gap-2 h-[52px] px-7 border border-[#f0f0f0] text-[#f0f0f0] rounded-full text-[14.5px] font-medium hover:bg-[#141414] transition-colors"
           >
-            팀 알아보기
+            서비스 보기
           </Link>
         </div>
 
-        {/* Pledges — 신생업체 톤: 실적 자랑 대신 약속의 명료함 */}
-        <div className="reveal mt-16 md:mt-24 grid grid-cols-1 md:grid-cols-3 gap-px bg-[#262626] border border-[#262626]">
-          <Pledge
-            title="블랙햇은 쓰지 않습니다"
-            desc="PBN, 자동 링크, 댓글 스팸 — 한때 효과 있던 방법은 이미 페널티 대상입니다."
-          />
-          <Pledge
-            title="모든 작업을 공유합니다"
-            desc="어떤 도메인에서 링크를 받았는지, 왜 그 도메인을 골랐는지 모두 로그로 남깁니다."
-          />
-          <Pledge
-            title="안 되는 일은 거절합니다"
-            desc="진단 결과 우리가 도와드릴 수 없는 영역이라면 그 자리에서 솔직히 말씀드립니다."
-          />
+        {/* Stats 실적 수치 */}
+        <div className="reveal mt-16 md:mt-24 grid grid-cols-1 sm:grid-cols-3 gap-px bg-[#262626] border border-[#262626]">
+          <Stat value="2주" label="웹사이트 제작 평균 소요 시간" />
+          <Stat countTo={98} suffix="%" label="고객 만족도" />
+          <Stat countTo={46} suffix="건" label="진행한 온페이지 SEO 세팅" />
         </div>
       </div>
     </section>
   );
 }
 
-function Pledge({ title, desc }: { title: string; desc: string }) {
+function Stat({
+  value,
+  countTo,
+  suffix,
+  label,
+}: {
+  value?: string;
+  countTo?: number;
+  suffix?: string;
+  label: string;
+}) {
   return (
-    <div className="bg-[#1a1a1a] p-7 md:p-8">
-      <h3 className="text-[16px] md:text-[17px] font-semibold tracking-[-0.015em] ko">{title}</h3>
-      <p className="mt-3 text-[13.5px] text-[#8e8e8e] leading-[1.7] ko">{desc}</p>
+    <div className="relative bg-gradient-to-b from-[#181818] to-[#0a0a0a] p-7 md:p-8 ring-1 ring-inset ring-white/[0.04] transition-transform duration-300 hover:-translate-y-0.5">
+      <div className="text-[38px] md:text-[48px] font-semibold tracking-[-0.04em] leading-none tabular-nums text-[#00c000] [text-shadow:0_2px_10px_rgba(0,200,0,0.45)]">
+        {countTo != null ? <CountUp target={countTo} suffix={suffix} /> : value}
+      </div>
+      <div className="mt-3 text-[13.5px] text-[#8e8e8e] ko">{label}</div>
     </div>
   );
 }
 
+/**
+ * 0에서 목표값까지 빠르게 올라가는 카운트업.
+ * 뷰포트에 들어올 때 1회 재생. reduced-motion 시 즉시 최종값.
+ */
+function CountUp({ target, suffix = "", duration = 1800 }: { target: number; suffix?: string; duration?: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [display, setDisplay] = useState(0);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setDisplay(target);
+      return;
+    }
+
+    let raf = 0;
+    let started = false;
+    const io = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry?.isIntersecting || started) return;
+        started = true;
+        io.unobserve(entry.target);
+
+        const t0 = performance.now();
+        const tick = (now: number) => {
+          const p = Math.min(1, (now - t0) / duration);
+          const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic 빠르게 시작
+          setDisplay(Math.round(target * eased));
+          if (p < 1) raf = requestAnimationFrame(tick);
+        };
+        raf = requestAnimationFrame(tick);
+      },
+      { threshold: 0.4 }
+    );
+
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      cancelAnimationFrame(raf);
+    };
+  }, [target, duration]);
+
+  return (
+    <span ref={ref}>
+      {display}
+      {suffix}
+    </span>
+  );
+}
+
 /* ───────────────────────────────────────────────────
-   PHILOSOPHY — 진중한 미디엄 카피 섹션
+   ABOUT 소개 — 우리가 무엇을 하는 팀인지
    링크어소리티풍 무게감 (한국어 타이포 위주)
 ─────────────────────────────────────────────────── */
-function Philosophy() {
+function About() {
   return (
-    <section className="py-24 md:py-40">
+    <section className="border-t border-[#262626] py-24 md:py-40 reveal">
       <div className="max-w-[1280px] mx-auto px-5 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
           <div className="md:col-span-3">
-            <div className="eyebrow">/ 01 — 철학</div>
+            <div className="eyebrow">/ 01 소개</div>
           </div>
           <div className="md:col-span-9">
-            <h2 className="reveal h-section text-[32px] md:text-[52px] lg:text-[60px] max-w-[18ch] ko">
-              검색은 신뢰의 시장입니다.
-              우리는 신뢰를 짧게 빌리지 않습니다.
+            <h2 className="reveal h-section text-3d text-[32px] md:text-[52px] lg:text-[60px] max-w-[18ch] ko">
+              LinkPresso는 검색 성장을
+              설계하는 팀입니다.
             </h2>
             <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
               <div className="reveal">
                 <p className="text-[15px] md:text-[16px] leading-[1.75] text-[#c8c8c8] ko">
-                  많은 SEO 업체가 빠른 순위 상승을 약속합니다.
-                  대부분의 약속은 다음 알고리즘 업데이트에서 회수됩니다.
-                  자동 생성 링크, 임대 PBN, 댓글 스팸 — 한때 효과가 있었던
-                  방법은 구글이 가장 먼저 학습한 패턴입니다.
+                  우리는 웹사이트 제작부터 온페이지 SEO, 백엔드 개발,
+                  키워드 클러스터 설계까지 검색 노출에 필요한 모든 축을
+                  한 팀에서 다룹니다. 흩어진 외주를 조율할 필요 없이
+                  토대부터 콘텐츠까지 하나의 기준으로 만듭니다.
                 </p>
               </div>
               <div className="reveal">
                 <p className="text-[15px] md:text-[16px] leading-[1.75] text-[#c8c8c8] ko">
-                  우리는 다른 길을 택했습니다. 실측 트래픽이 있는 매체에
-                  맥락이 있는 인용을, 토픽이 일치하는 도메인에 진짜 정보를.
-                  속도는 느리지만 누적되고, 누적된 권위는 쉽게 무너지지 않습니다.
+                  목표는 반짝 순위가 아닙니다. 실측 트래픽이 있는 매체의
+                  맥락 있는 인용, 토픽이 일치하는 도메인의 권위, 검색엔진이
+                  읽기 좋은 기술적 구조 코어 업데이트 후에도 살아남는
+                  검색 자산을 쌓는 것이 우리가 하는 일입니다.
                 </p>
               </div>
             </div>
@@ -149,35 +196,40 @@ function ServicesPreview() {
   const services = [
     {
       n: "01",
-      title: "백링크 빌딩",
-      desc: "도메인 권위, 토픽 관련성, 실측 트래픽까지 검증된 매체에서만 인용 링크를 확보합니다. 대량 발송이 아닌 손으로 협의하는 방식입니다.",
+      title: "웹사이트 제작",
+      desc: "SEO를 처음부터 고려한 구조로 웹사이트를 설계·제작합니다. 빠른 로딩, 명확한 정보 구조, 검색엔진이 읽기 좋은 마크업이 기본입니다.",
     },
     {
       n: "02",
-      title: "온페이지 SEO",
+      title: "온페이지 SEO 세팅",
       desc: "기술 SEO 감사부터 콘텐츠 구조, 내부 링크 토폴로지까지. 크롤 예산을 가장 가치 있는 페이지로 흐르게 합니다.",
     },
     {
       n: "03",
-      title: "토픽 클러스터",
+      title: "백엔드 웹개발",
+      desc: "데이터와 기능이 필요한 서비스를 위한 백엔드를 개발합니다. API 설계부터 데이터베이스, 배포까지 한 흐름으로 다룹니다.",
+    },
+    {
+      n: "04",
+      title: "키워드 클러스터",
       desc: "단일 키워드가 아닌 의미망 단위로 콘텐츠를 설계합니다. 허브-스포크 구조로 도메인 전체의 토픽 권위를 끌어올립니다.",
     },
   ];
 
   return (
-    <section className="border-t border-[#262626] py-24 md:py-32">
+    <section className="border-t border-[#262626] py-24 md:py-32 reveal">
       <div className="max-w-[1280px] mx-auto px-5 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 mb-16">
           <div className="md:col-span-3">
-            <div className="eyebrow">/ 02 — 서비스</div>
+            <div className="eyebrow">/ 02 서비스</div>
           </div>
           <div className="md:col-span-9">
-            <h2 className="reveal h-section text-[32px] md:text-[52px] max-w-[18ch] ko">
-              세 가지 축을 동시에 다룹니다
+            <h2 className="reveal h-section text-3d text-[32px] md:text-[52px] max-w-[18ch] ko">
+              네 가지 축을 동시에 다룹니다
             </h2>
             <p className="reveal mt-6 text-[15px] md:text-[16px] text-[#8e8e8e] max-w-[56ch] leading-relaxed ko">
-              하나만 잘해서는 충분하지 않습니다. 링크와 콘텐츠와 기술적 토대가
-              함께 작동할 때 비로소 순위는 흔들리지 않습니다.
+              하나만 잘해서는 충분하지 않습니다. 웹사이트의 토대와 콘텐츠와
+              기술적 최적화가 함께 작동할 때 비로소 순위는 흔들리지 않습니다.
             </p>
           </div>
         </div>
@@ -213,38 +265,38 @@ function ServicesPreview() {
    PROCESS
 ─────────────────────────────────────────────────── */
 function Process() {
-  const steps = [
+  const steps: { icon: LucideIcon; title: string; desc: string }[] = [
     {
-      n: "i",
+      icon: Search,
       title: "도메인 진단",
       desc: "현재 백링크 프로필, 토픽 권위, 기술적 이슈를 14개 지표로 스캔합니다. 약점이 어디에 있는지부터.",
     },
     {
-      n: "ii",
+      icon: Target,
       title: "전략 설계",
       desc: "경쟁사 갭 분석을 거쳐 분기별 KPI와 키워드 우선순위를 합의합니다. 막연한 목표는 두지 않습니다.",
     },
     {
-      n: "iii",
+      icon: Zap,
       title: "실행",
       desc: "링크 확보, 콘텐츠 발행, 기술 개선을 동시에. 모든 작업은 로그로 남고 매주 공유됩니다.",
     },
     {
-      n: "iv",
+      icon: RefreshCw,
       title: "검증과 반복",
       desc: "월간 리포트로 ROI를 가시화합니다. 효과 없는 채널은 즉시 중단, 잘 되는 패턴은 두 배로.",
     },
   ];
 
   return (
-    <section className="border-t border-[#262626] bg-[#141414] py-24 md:py-32">
+    <section className="border-t border-[#262626] bg-[#141414] py-24 md:py-32 reveal">
       <div className="max-w-[1280px] mx-auto px-5 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 mb-16">
           <div className="md:col-span-3">
-            <div className="eyebrow">/ 03 — 프로세스</div>
+            <div className="eyebrow">/ 03 프로세스</div>
           </div>
           <div className="md:col-span-9">
-            <h2 className="reveal h-section text-[32px] md:text-[52px] max-w-[18ch] ko">
+            <h2 className="reveal h-section text-3d text-[32px] md:text-[52px] max-w-[18ch] ko">
               측정에서 시작해<br />
               측정으로 끝납니다
             </h2>
@@ -253,9 +305,9 @@ function Process() {
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-px bg-[#262626] border border-[#262626]">
           {steps.map((s) => (
-            <div key={s.n} className="reveal bg-[#0a0a0a] p-8 md:p-10">
-              <div className="text-[64px] md:text-[80px] leading-none font-semibold tracking-[-0.05em] text-[#f0f0f0]">
-                {s.n}
+            <div key={s.title} className="reveal bg-[#0a0a0a] p-8 md:p-10">
+              <div className="inline-flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-[#202020] to-[#0d0d0d] border border-[#2e2e2e] shadow-[0_8px_24px_-6px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.06)]">
+                <s.icon className="w-7 h-7 md:w-8 md:h-8 text-[#00c800] drop-shadow-[0_0_8px_rgba(0,200,0,0.35)]" strokeWidth={2} />
               </div>
               <div className="mt-8 h-px w-8 bg-[#3a3a3a]" />
               <h4 className="mt-8 text-[18px] md:text-[20px] font-semibold tracking-[-0.02em] text-[#f0f0f0] ko">
@@ -275,50 +327,61 @@ function Process() {
 /* ───────────────────────────────────────────────────
    FAQ
 ─────────────────────────────────────────────────── */
+// FAQ 데이터 화면 렌더와 FAQPage 구조화 데이터(JSON-LD)가 같은 소스를 공유
+const FAQ_ITEMS = [
+  {
+    q: "링크프레소는 어떤 서비스를 제공하나요?",
+    a: "SEO와 웹사이트 개발을 전문으로 하는 에이전시입니다. 검색에서 상위 노출되어 실제 문의로 이어지는 웹 환경을 구축합니다.",
+  },
+  {
+    q: "SEO 효과는 언제부터 나타나나요?",
+    a: "일반적으로 3개월 전후부터 순위 변화가 보이며, 6개월 이상 관리할 때 안정적으로 자리잡습니다.",
+  },
+  {
+    q: "기존 사이트도 SEO 개선이 가능한가요?",
+    a: "가능합니다. 진단 리포트를 먼저 드린 뒤 현재 자산을 최적화하는 방향으로 진행합니다.",
+  },
+  {
+    q: "제작과 SEO를 따로 의뢰할 수 있나요?",
+    a: "각각 별도로 가능합니다. 다만 신규 제작 시에는 통합 진행을 권해 드립니다.",
+  },
+  {
+    q: "진행 상황과 성과는 어떻게 확인하나요?",
+    a: "키워드 순위, 검색 유입, 전환 데이터를 정기 리포트로 공유해 드립니다.",
+  },
+  {
+    q: "비용은 어떻게 책정되나요?",
+    a: "작업 범위에 따라 달라집니다. 무료 진단 후 필요한 작업만 담은 맞춤 견적을 드립니다.",
+  },
+  {
+    q: "계약 종료 후에도 순위가 유지되나요?",
+    a: "쌓인 콘텐츠와 백링크는 자산으로 남아 효과가 지속됩니다. 다만 지속 관리가 유리합니다.",
+  },
+];
+
 function FAQ() {
-  const items = [
-    {
-      q: "신생업체인데 믿고 맡겨도 되나요?",
-      a: "회사는 새롭지만 멤버들은 SEO 업계에서 수년간 일한 사람들입니다. 신생업체이기 때문에 가능한 강점도 있습니다. 동시에 많은 클라이언트를 받지 않아 한 곳에 더 집중할 수 있고, 합리적인 초기 가격으로 시작할 수 있습니다. 무엇보다 지금 우리에게 가장 중요한 건 첫 클라이언트들과의 결과입니다. 그래서 더 진지하게 일합니다.",
-    },
-    {
-      q: "구글 페널티 위험은 없나요?",
-      a: "모든 작업은 구글 검색 가이드라인 안에서 진행됩니다. PBN, 사설 링크 팜, 자동 생성 댓글 같은 블랙햇 기법은 사용하지 않습니다. 대신 시간이 걸리더라도 실측 트래픽이 있는 도메인에서 자연스러운 인용 링크를 확보합니다.",
-    },
-    {
-      q: "효과는 언제부터 보이나요?",
-      a: "롱테일 키워드는 보통 6~10주 안에 순위 변동이 시작됩니다. 경쟁이 강한 헤드 키워드는 4~9개월을 잡으셔야 합니다. 빠른 성과를 약속하는 곳은 대부분 단기적 수단을 사용하고, 그 결과는 다음 코어 업데이트에서 회수됩니다.",
-    },
-    {
-      q: "계약 기간이 정해져 있나요?",
-      a: "최소 3개월 단위입니다. SEO는 누적되어야 효과가 나오는 작업이라, 1개월 단위 계약은 양쪽 모두에게 의미 있는 결과를 만들기 어렵습니다. 6개월·12개월 약정 시 단가 할인이 적용됩니다.",
-    },
-    {
-      q: "어떤 산업에서 일해보셨나요?",
-      a: "멤버들은 이전 직장에서 B2B SaaS, 핀테크, 이커머스, 헬스케어, 법무·세무, 교육 분야의 SEO를 다뤄봤습니다. 도박·성인·의약품 직접 판매처럼 우리가 구조적으로 도와드릴 수 없는 영역은 처음부터 거절합니다.",
-    },
-    {
-      q: "리포트는 어떻게 받나요?",
-      a: "전용 대시보드에 매일 자동 업데이트되며, 매주 또는 매월 정리된 PDF 리포트를 받게 됩니다. 키워드 순위, 백링크 변동, 트래픽 변화, 다음 액션을 한 페이지에 정리합니다.",
-    },
-  ];
+  // FAQPage 구조화 데이터 구글 리치 결과(FAQ) 대상
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ_ITEMS.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  };
 
   return (
-    <section className="border-t border-[#262626] py-24 md:py-32">
+    <section className="border-t border-[#262626] py-24 md:py-32 reveal">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <div className="max-w-[1280px] mx-auto px-5 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 mb-12">
-          <div className="md:col-span-3">
-            <div className="eyebrow">/ 04 — 자주 묻는 질문</div>
-          </div>
-          <div className="md:col-span-9">
-            <h2 className="reveal h-section text-[32px] md:text-[52px] max-w-[18ch] ko">
-              먼저 듣고 싶을 만한 것들
-            </h2>
-          </div>
-        </div>
+        <div className="reveal eyebrow text-center mb-12">/ 04 자주 묻는 질문</div>
 
-        <div className="md:col-start-4 md:col-span-9 max-w-[800px] md:ml-auto">
-          {items.map((item, idx) => (
+        <div className="max-w-[800px] mx-auto">
+          {FAQ_ITEMS.map((item, idx) => (
             <FaqItem key={idx} q={item.q} a={item.a} />
           ))}
         </div>
@@ -358,14 +421,13 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 ─────────────────────────────────────────────────── */
 function CTA() {
   return (
-    <section className="border-t border-[#262626] py-24 md:py-40 bg-[#141414]">
+    <section className="border-t border-[#262626] py-24 md:py-40 bg-[#141414] reveal">
       <div className="max-w-[1280px] mx-auto px-5 md:px-8 text-center">
-        <h2 className="reveal h-section text-[36px] md:text-[64px] lg:text-[80px] max-w-[18ch] mx-auto ko">
-          15분이면 충분합니다
+        <h2 className="reveal h-section text-3d text-[36px] md:text-[64px] lg:text-[80px] max-w-[18ch] mx-auto ko">
+          10분이면 충분합니다
         </h2>
         <p className="reveal mt-8 text-[15px] md:text-[17px] text-[#c8c8c8] max-w-[48ch] mx-auto leading-relaxed ko">
-          도메인 URL만 알려주시면 무료 진단 리포트를 보내드립니다.
-          설득은 그 다음 이야기해도 늦지 않습니다.
+          도메인 주소 하나면 됩니다. 지금 어디가 막혀 있는지, 무료로 짚어드립니다.
         </p>
         <div className="reveal mt-12 flex flex-wrap items-center justify-center gap-3">
           <Link
@@ -374,12 +436,6 @@ function CTA() {
           >
             무료 진단 신청
             <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Link>
-          <Link
-            to="/about"
-            className="inline-flex items-center gap-2 h-[56px] px-8 border border-[#f0f0f0] text-[#f0f0f0] rounded-full text-[15px] font-medium hover:bg-[#141414] transition-colors"
-          >
-            팀 알아보기
           </Link>
         </div>
       </div>

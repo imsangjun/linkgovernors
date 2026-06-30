@@ -44,20 +44,20 @@ export function Privacy() {
 
           <Article num="5" title="개인정보 처리 위탁">
             회사는 서비스 운영을 위해 다음 업체에 일부 처리를 위탁합니다:
-            (1) Vercel — 웹사이트 호스팅, (2) Supabase — 문의 데이터 저장,
-            (3) Google Analytics — 웹사이트 트래픽 분석. 위탁업체에 대해서는
+            (1) Vercel 웹사이트 호스팅, (2) Supabase 문의 데이터 저장,
+            (3) Google Analytics 웹사이트 트래픽 분석. 위탁업체에 대해서는
             개인정보 보호 의무를 계약상 부과하고 정기적으로 점검합니다.
           </Article>
 
           <Article num="6" title="이용자의 권리">
             회원은 언제든지 자신의 개인정보를 조회·수정·삭제·처리정지 요청할 수
-            있습니다. 요청은 hello@linkpresso.kr 로 보내주시면 영업일 기준
+            있습니다. 요청은 likkoreaofficial@gmail.com 로 보내주시면 영업일 기준
             7일 이내에 처리됩니다.
           </Article>
 
           <Article num="7" title="개인정보 보호 책임자">
             개인정보 보호와 관련한 문의는 다음 연락처로 보내주시기 바랍니다.
-            성명: 홍길동 / 이메일: privacy@linkpresso.kr
+            성명: 임상준 / 이메일: likkoreaofficial@gmail.com
           </Article>
 
           <Article num="8" title="쿠키 사용">

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://linkgovernors.kr/sitemap.xml
+Sitemap: https://linkpresso.kr/sitemap.xml

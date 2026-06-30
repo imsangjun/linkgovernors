@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { Outlet, Link, NavLink, useLocation } from "react-router";
 import { Menu, X } from "lucide-react";
 import { cn } from "../lib/utils";
+import { useSEO } from "../lib/seo";
 
 /* ───────────────────────────────────────────────────
-   브랜드 마크 — 빨간 점 1개는 여기에만 존재
+   브랜드 마크 빨간 점 1개는 여기에만 존재
 ─────────────────────────────────────────────────── */
 function BrandMark({ size = "base" }: { size?: "base" | "sm" }) {
   return (
@@ -20,7 +21,7 @@ function BrandMark({ size = "base" }: { size?: "base" | "sm" }) {
       <span
         aria-hidden
         className={cn(
-          "ml-[2px] rounded-full bg-[#00ff00] inline-block translate-y-[-1px] transition-transform group-hover:scale-125",
+          "ml-[2px] rounded-full bg-[#00c800] inline-block translate-y-[-1px] transition-transform group-hover:scale-125",
           size === "sm" ? "w-[5px] h-[5px]" : "w-[6px] h-[6px]"
         )}
       />
@@ -33,9 +34,10 @@ function BrandMark({ size = "base" }: { size?: "base" | "sm" }) {
 ─────────────────────────────────────────────────── */
 const NAV = [
   { to: "/services", label: "서비스" },
+  { to: "/cases", label: "케이스 스터디" },
   { to: "/blog", label: "블로그" },
   { to: "/pricing", label: "요금제" },
-  // { to: "/cases", label: "케이스 스터디" }, // 향후 사례 누적 후 활성화
+  { to: "/about", label: "회사 소개" },
   { to: "/contact", label: "문의" },
 ];
 
@@ -45,6 +47,9 @@ const NAV = [
 export function Root() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  // 라우트별 title / description / canonical / og 메타 갱신
+  useSEO();
 
   // 라우트 변경 시 모바일 메뉴 닫기 + 스크롤 최상단
   useEffect(() => {
@@ -156,7 +161,27 @@ export function Root() {
 
       {/* ─── Footer ─── */}
       <Footer />
+
+      {/* ─── 플로팅 카카오톡 문의 버튼 (모든 페이지 우측 하단 고정) ─── */}
+      <a
+        href="https://open.kakao.com/o/sF4jwPBi"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="카카오톡 문의하기"
+        className="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2.5 rounded-full bg-[#FEE500] pl-5 pr-6 py-4 text-[#191600] text-[16px] md:text-[17px] font-semibold shadow-xl shadow-black/30 hover:brightness-95 active:scale-95 transition"
+      >
+        <KakaoIcon className="w-7 h-7" />
+        <span className="hidden sm:inline">카톡 문의</span>
+      </a>
     </div>
+  );
+}
+
+function KakaoIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 256 256" fill="currentColor" aria-hidden="true" className={className}>
+      <path d="M128 36C70.56 36 24 72.74 24 118.06c0 29.32 19.5 55.05 48.82 69.51-1.61 5.86-8.3 30.23-8.57 32.15 0 0-.17 1.43.76 1.98.93.55 2.02.13 2.02.13 2.69-.38 31.17-20.4 36.1-23.88 7.45 1.05 15.13 1.6 22.85 1.6 57.44 0 104-36.74 104-82.06S185.44 36 128 36z" />
+    </svg>
   );
 }
 
@@ -167,47 +192,8 @@ function Footer() {
   return (
     <footer className="border-t border-[#262626] bg-[#0a0a0a]">
       <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-16 md:py-20">
-        {/* Big footer headline */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-20 mb-16">
-          <div>
-            <h3 className="text-[28px] md:text-[40px] leading-[1.1] tracking-[-0.035em] font-semibold ko">
-              검색 결과 1페이지는<br />
-              운이 아닙니다.
-            </h3>
-            <p className="mt-5 text-[14px] md:text-[15px] text-[#8e8e8e] leading-relaxed max-w-[42ch] ko">
-              지금 도메인을 보내주시면, 어떤 작업이 필요한지 한 페이지로 정리해 드립니다.
-              제안서가 마음에 들지 않으면 그걸로 끝입니다.
-            </p>
-            <Link
-              to="/contact"
-              className="mt-7 inline-flex items-center gap-2 text-[14px] font-medium text-[#f0f0f0] border-b border-[#f0f0f0] pb-1 hover:gap-3 transition-all"
-            >
-              진단 요청하기
-              <span aria-hidden>→</span>
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-2 gap-8">
-            <div>
-              <h4 className="eyebrow mb-4">서비스</h4>
-              <ul className="space-y-2.5 text-[13.5px]">
-                <li><Link to="/services" className="text-[#c8c8c8] hover:text-[#f0f0f0]">백링크 빌딩</Link></li>
-                <li><Link to="/services" className="text-[#c8c8c8] hover:text-[#f0f0f0]">온페이지 SEO</Link></li>
-                <li><Link to="/services" className="text-[#c8c8c8] hover:text-[#f0f0f0]">콘텐츠 설계</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="eyebrow mb-4">회사</h4>
-              <ul className="space-y-2.5 text-[13.5px]">
-                <li><Link to="/about" className="text-[#c8c8c8] hover:text-[#f0f0f0]">소개</Link></li>
-                <li><Link to="/contact" className="text-[#c8c8c8] hover:text-[#f0f0f0]">문의</Link></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
         {/* Legal info */}
-        <div className="rule pt-8">
+        <div>
           <BrandMark size="sm" />
           <div className="mt-5 text-[12px] text-[#5a5a5a] space-y-1.5 leading-relaxed">
             <p>대표자: 이영민 &nbsp;|&nbsp; 사업자 등록번호: 458-87-03871</p>
@@ -219,17 +205,6 @@ function Footer() {
                 className="hover:text-[#c8c8c8] underline underline-offset-2"
               >
                 likkoreaofficial@gmail.com
-              </a>
-            </p>
-            <p>
-              인스타그램:{" "}
-              <a
-                href="https://www.instagram.com/linkgovernours/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-[#c8c8c8] underline underline-offset-2"
-              >
-                openviral_space
               </a>
             </p>
             <p>개인정보관리책임자: 임상준 &nbsp;|&nbsp; 호스팅제공자: Vercel</p>
