@@ -12,7 +12,6 @@ const Blog     = lazy(() => import("./components/Blog").then((m) => ({ default: 
 const BlogPost = lazy(() => import("./components/BlogPost").then((m) => ({ default: m.BlogPost })));
 const Pricing  = lazy(() => import("./components/Pricing").then((m) => ({ default: m.Pricing })));
 const Cases    = lazy(() => import("./components/Cases").then((m) => ({ default: m.Cases })));
-const About    = lazy(() => import("./components/About").then((m) => ({ default: m.About })));
 const Contact  = lazy(() => import("./components/Contact").then((m) => ({ default: m.Contact })));
 const Terms    = lazy(() => import("./components/Terms").then((m) => ({ default: m.Terms })));
 const Privacy  = lazy(() => import("./components/Privacy").then((m) => ({ default: m.Privacy })));
@@ -41,7 +40,6 @@ export const router = createBrowserRouter([
       { path: "blog/:slug", element: <Lazy><BlogPost /></Lazy> },
       { path: "pricing",  element: <Lazy><Pricing /></Lazy> },
       { path: "cases",    element: <Lazy><Cases /></Lazy> },
-      { path: "about",    element: <Lazy><About /></Lazy> },
       { path: "contact",  element: <Lazy><Contact /></Lazy> },
       { path: "terms",    element: <Lazy><Terms /></Lazy> },
       { path: "privacy",  element: <Lazy><Privacy /></Lazy> },

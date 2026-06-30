@@ -24,7 +24,6 @@ interface CaseStudy {
   title: string;
   industry: string;
   period: string;
-  url?: string; // 라이브 사이트 (있으면 카드에 링크 노출)
   challenge: string;
   work: string[];
   metrics: CaseMetric[];
@@ -36,7 +35,6 @@ const CASES: CaseStudy[] = [
     title: "장비 렌탈 서비스 웹사이트\n제작 & SEO",
     industry: "장비 렌탈",
     period: "2026 진행",
-    url: "https://www.skarte-rental.com/",
     challenge:
       "오프라인 위주로 운영되던 장비 렌탈 서비스로, 온라인에서 '장비 렌탈' 관련 검색에 거의 노출되지 않았습니다. 잠재 고객이 업체를 찾고 문의로 이어질 디지털 접점 자체가 없는 상태였습니다.",
     work: [
@@ -52,39 +50,41 @@ const CASES: CaseStudy[] = [
     ],
   },
   {
-    tag: "예시 A",
-    title: "B2B SaaS 도입 문의를 만드는 검색 유입",
-    industry: "B2B SaaS",
-    period: "진행 기간 TBD",
+    tag: "skarte-film",
+    title: "영상 제작사 브랜드\n랜딩페이지 제작 & SEO",
+    industry: "영상 제작",
+    period: "2026 진행",
     challenge:
-      "제품은 좋지만 핵심 키워드에서 경쟁사에 밀려 검색 유입이 정체된 상태. 블로그는 있으나 토픽이 흩어져 있어 도메인 권위가 쌓이지 않았습니다.",
+      "공연·브랜드필름·광고 영상을 만드는 제작사였지만, 작업물을 한곳에서 보여줄 브랜드 사이트가 없었습니다. 잠재 클라이언트가 포트폴리오를 확인하고 문의로 이어질 온라인 접점이 부족했고, '인천 영상 제작' 같은 지역·서비스 검색에서도 거의 노출되지 않았습니다.",
     work: [
-      "토픽 클러스터 재설계 허브-스포크 구조로 핵심 주제 묶기",
-      "실측 트래픽 있는 업계 매체에서 맥락 있는 인용 링크 확보",
-      "온페이지 기술 감사 후 크롤 예산을 핵심 페이지로 재배분",
+      "브랜드 톤을 담은 영상 제작사 랜딩페이지 신규 제작",
+      "포트폴리오 중심 정보 구조 설계 공연·브랜드필름·광고·하이라이트",
+      "지역·서비스 키워드 클러스터 설계 인천 영상 제작, 브랜드필름 등",
+      "온페이지 SEO + OG·구조화 데이터로 검색·공유 노출 강화",
     ],
     metrics: [
-      { label: "유기 트래픽", value: "TBD", note: "기간 내 증가율" },
-      { label: "1페이지 키워드", value: "TBD", note: "신규 진입 수" },
-      { label: "도입 문의", value: "TBD", note: "검색 경유 리드" },
+      { label: "사이트 제작", value: "2주", note: "기획·디자인·개발" },
+      { label: "타겟 키워드", value: "지역+서비스", note: "영상 제작 클러스터" },
+      { label: "Core Web Vitals", value: "통과", note: "모바일·데스크톱" },
     ],
   },
   {
-    tag: "예시 B",
-    title: "이커머스 카테고리 페이지 권위 회복",
-    industry: "이커머스",
-    period: "진행 기간 TBD",
+    tag: "corporate-intro",
+    title: "기업 소개 페이지\n제작 & SEO",
+    industry: "기업 소개",
+    period: "2026 진행",
     challenge:
-      "코어 업데이트 이후 주요 카테고리 페이지 순위가 하락. 과거 대량 링크의 흔적이 남아 신뢰 신호가 약해진 상태였습니다.",
+      "사업은 운영되고 있었지만, 회사를 공식적으로 소개하는 온라인 페이지가 없었습니다. 회사명을 검색해도 신뢰할 만한 공식 페이지가 노출되지 않아, 잠재 고객·파트너가 회사의 사업 영역과 연혁을 확인할 접점이 비어 있는 상태였습니다.",
     work: [
-      "위험 링크 정리 및 자연 링크 프로필로 점진 전환",
-      "카테고리·상품 페이지 내부 링크 토폴로지 재구성",
-      "구매 의도 키워드 중심의 콘텐츠 보강",
+      "회사 정체성을 담은 기업 소개 페이지 신규 제작",
+      "사업 영역·연혁·핵심 가치·연락처 중심의 정보 구조 설계",
+      "회사명·브랜드·산업 키워드 클러스터 설계로 검색 노출 확보",
+      "Organization 구조화 데이터 + OG 태그로 브랜드 검색·공유 최적화",
     ],
     metrics: [
-      { label: "카테고리 순위", value: "TBD", note: "평균 상승 폭" },
-      { label: "노출 수", value: "TBD", note: "기간 내 증가율" },
-      { label: "전환 매출", value: "TBD", note: "검색 경유 기여" },
+      { label: "사이트 제작", value: "2주", note: "기획·디자인·개발" },
+      { label: "타겟 키워드", value: "브랜드+산업", note: "기업 소개 클러스터" },
+      { label: "Core Web Vitals", value: "통과", note: "모바일·데스크톱" },
     ],
   },
 ];
@@ -113,14 +113,13 @@ export function Cases() {
             <span className="w-1.5 h-1.5 rounded-full bg-[#00c800] flex-shrink-0" />
             <span className="text-[13px] text-[#8e8e8e] ko">
               아래 사례는 <strong className="text-[#c8c8c8] font-medium">모두 실제 진행된 사례</strong>입니다.
-              새로운 사례가 완료되는 대로 계속 추가됩니다.
             </span>
           </div>
         </div>
       </section>
 
       {/* Case list */}
-      <section className="py-20 md:py-28">
+      <section className="pt-10 md:pt-12 pb-20 md:pb-28">
         <div className="max-w-[1280px] mx-auto px-5 md:px-8 space-y-8 md:space-y-12">
           {CASES.map((c, i) => (
             <CaseCard key={c.tag} data={c} index={i} />
@@ -176,17 +175,6 @@ function CaseCard({ data, index }: { data: CaseStudy; index: number }) {
               <dd className="text-[#c8c8c8] ko">{data.period}</dd>
             </div>
           </dl>
-          {data.url && (
-            <a
-              href={data.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group mt-6 inline-flex items-center gap-2 h-[42px] px-5 border border-[#00c800] text-[#00c800] rounded-full text-[13px] font-medium hover:bg-[#00c800]/[0.08] transition-colors"
-            >
-              {data.url.replace(/^https?:\/\//, "").replace(/\/$/, "")}
-              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
-          )}
         </div>
 
         {/* Right: detail */}

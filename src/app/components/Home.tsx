@@ -3,8 +3,6 @@ import { Link } from "react-router";
 import { ArrowUpRight, ArrowRight, Search, Target, Zap, RefreshCw } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useRevealOnScroll } from "../lib/useRevealOnScroll";
-import { StringMesh } from "./StringMesh";
-import { ScrollReveal } from "./ScrollReveal";
 
 export function Home() {
   useRevealOnScroll();
@@ -12,8 +10,6 @@ export function Home() {
   return (
     <>
       <Hero />
-      <StringMesh />
-      <ScrollReveal />
       <ServicesPreview />
       <Process />
       <FAQ />
@@ -40,9 +36,9 @@ function Hero() {
 
         {/* Sub */}
         <p className="reveal mt-10 md:mt-14 text-[16px] md:text-[19px] leading-[1.65] text-[#c8c8c8] max-w-[58ch] ko">
-          LinkPresso는 백링크 한 건 한 건의 맥락,
-          도메인의 토픽 권위, 페이지의 기술적 토대를 함께 다룹니다.
-          단기 순위가 아니라 다음 코어 업데이트 후에도 살아남는 구조를 만듭니다.
+          LinkPresso는 웹사이트를 만드는 첫 단계부터 검색 노출을 함께 설계합니다.
+          구조, 콘텐츠, 페이지의 기술적 토대를 처음부터 SEO 기준으로 잡아,
+          단기 순위가 아니라 다음 코어 업데이트 후에도 살아남는 검색 자산을 만듭니다.
         </p>
 
         {/* CTAs */}
@@ -86,7 +82,7 @@ function Stat({
 }) {
   return (
     <div className="relative bg-gradient-to-b from-[#181818] to-[#0a0a0a] p-7 md:p-8 ring-1 ring-inset ring-white/[0.04] transition-transform duration-300 hover:-translate-y-0.5">
-      <div className="text-[38px] md:text-[48px] font-semibold tracking-[-0.04em] leading-none tabular-nums text-[#00c000] [text-shadow:0_2px_10px_rgba(0,200,0,0.45)]">
+      <div className="text-[38px] md:text-[48px] font-semibold tracking-[-0.04em] leading-none tabular-nums text-[#00c000]">
         {countTo != null ? <CountUp target={countTo} suffix={suffix} /> : value}
       </div>
       <div className="mt-3 text-[13.5px] text-[#8e8e8e] ko">{label}</div>
@@ -156,10 +152,7 @@ function About() {
     <section className="border-t border-[#262626] py-24 md:py-40 reveal">
       <div className="max-w-[1280px] mx-auto px-5 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
-          <div className="md:col-span-3">
-            <div className="eyebrow">/ 01 소개</div>
-          </div>
-          <div className="md:col-span-9">
+          <div className="md:col-span-12">
             <h2 className="reveal h-section text-3d text-[32px] md:text-[52px] lg:text-[60px] max-w-[18ch] ko">
               LinkPresso는 검색 성장을
               설계하는 팀입니다.
@@ -214,43 +207,66 @@ function ServicesPreview() {
       title: "키워드 클러스터",
       desc: "단일 키워드가 아닌 의미망 단위로 콘텐츠를 설계합니다. 허브-스포크 구조로 도메인 전체의 토픽 권위를 끌어올립니다.",
     },
+    {
+      n: "05",
+      title: "도메인 구매 대행",
+      desc: "브랜드와 검색에 유리한 도메인을 찾고 구매·이전을 대신 처리합니다. 만료 도메인의 기존 권위까지 검토해 가장 가치 있는 출발점을 확보합니다.",
+    },
   ];
+
+  const tags: Record<string, string[]> = {
+    "01": ["RESPONSIVE", "CORE WEB VITALS"],
+    "02": ["TECHNICAL SEO", "SCHEMA"],
+    "03": ["REST API", "CLOUD DEPLOY"],
+    "04": ["HUB & SPOKE", "SEARCH INTENT"],
+    "05": ["EXPIRED DOMAIN", "DNS SETUP"],
+  };
 
   return (
     <section className="border-t border-[#262626] py-24 md:py-32 reveal">
       <div className="max-w-[1280px] mx-auto px-5 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 mb-16">
-          <div className="md:col-span-3">
-            <div className="eyebrow">/ 02 서비스</div>
-          </div>
-          <div className="md:col-span-9">
-            <h2 className="reveal h-section text-3d text-[32px] md:text-[52px] max-w-[18ch] ko">
-              네 가지 축을 동시에 다룹니다
-            </h2>
-            <p className="reveal mt-6 text-[15px] md:text-[16px] text-[#8e8e8e] max-w-[56ch] leading-relaxed ko">
-              하나만 잘해서는 충분하지 않습니다. 웹사이트의 토대와 콘텐츠와
-              기술적 최적화가 함께 작동할 때 비로소 순위는 흔들리지 않습니다.
-            </p>
-          </div>
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 md:mb-14">
+          <h2 className="reveal h-display text-3d text-[44px] sm:text-[64px] md:text-[84px] leading-[0.9] tracking-[-0.03em]">
+            CORE<br />SERVICES
+          </h2>
+          <Link
+            to="/services"
+            className="reveal group inline-flex items-center gap-2 text-[13px] font-mono uppercase tracking-[0.08em] text-[#00c800] hover:gap-3 transition-all"
+          >
+            전체 서비스 보기
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </Link>
         </div>
 
-        <div className="rule">
+        {/* Service grid — 각 카드는 서비스 페이지의 해당 섹션으로 이동 */}
+        <div className="border-t border-[#262626] grid grid-cols-1 md:grid-cols-2 md:gap-x-12 lg:gap-x-20">
           {services.map((s) => (
             <Link
               key={s.n}
-              to="/services"
-              className="reveal group block py-10 md:py-12 border-b border-[#262626] hover:bg-[#141414] transition-colors -mx-5 md:-mx-8 px-5 md:px-8"
+              to={`/services#service-${s.n}`}
+              className="reveal group block border-b border-[#262626] py-8 md:py-9"
             >
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-baseline">
-                <div className="md:col-span-2 eyebrow tabular-nums">{s.n}</div>
-                <h3 className="md:col-span-4 text-[24px] md:text-[32px] font-semibold tracking-[-0.025em] ko">
-                  {s.title}
-                </h3>
-                <p className="md:col-span-5 text-[14.5px] md:text-[15px] text-[#8e8e8e] leading-[1.7] ko">
-                  {s.desc}
-                </p>
-                <div className="md:col-span-1 flex md:justify-end">
-                  <ArrowRight className="w-5 h-5 text-[#5a5a5a] group-hover:text-[#f0f0f0] group-hover:translate-x-1 transition-all" />
+              <div className="flex gap-5 md:gap-7">
+                <span className="pt-1.5 text-[11px] font-mono text-[#5a5a5a] tabular-nums">{s.n}</span>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="text-[21px] md:text-[26px] font-bold tracking-[-0.02em] text-[#f0f0f0] group-hover:text-white transition-colors ko">
+                      {s.title}
+                    </h3>
+                    <ArrowUpRight className="mt-1 w-5 h-5 flex-shrink-0 text-[#3a3a3a] group-hover:text-[#00c800] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                  </div>
+                  <p className="mt-2 text-[14px] text-[#8e8e8e] leading-[1.6] ko">{s.desc}</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {(tags[s.n] ?? []).map((t) => (
+                      <span
+                        key={t}
+                        className="px-2 py-1 text-[10px] font-mono uppercase tracking-[0.06em] border border-[#262626] text-[#5a5a5a] rounded"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </Link>
@@ -291,16 +307,10 @@ function Process() {
   return (
     <section className="border-t border-[#262626] bg-[#141414] py-24 md:py-32 reveal">
       <div className="max-w-[1280px] mx-auto px-5 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 mb-16">
-          <div className="md:col-span-3">
-            <div className="eyebrow">/ 03 프로세스</div>
-          </div>
-          <div className="md:col-span-9">
-            <h2 className="reveal h-section text-3d text-[32px] md:text-[52px] max-w-[18ch] ko">
-              측정에서 시작해<br />
-              측정으로 끝납니다
-            </h2>
-          </div>
+        <div className="mb-16">
+          <h2 className="reveal h-display text-3d text-[40px] sm:text-[56px] md:text-[72px] tracking-[-0.03em]">
+            Process
+          </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-px bg-[#262626] border border-[#262626]">
@@ -378,7 +388,7 @@ function FAQ() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <div className="max-w-[1280px] mx-auto px-5 md:px-8">
-        <div className="reveal eyebrow text-center mb-12">/ 04 자주 묻는 질문</div>
+        <h2 className="reveal h-section text-3d text-[26px] md:text-[40px] text-center mb-12 ko">자주 묻는 질문</h2>
 
         <div className="max-w-[800px] mx-auto">
           {FAQ_ITEMS.map((item, idx) => (

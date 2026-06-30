@@ -37,7 +37,6 @@ const NAV = [
   { to: "/cases", label: "케이스 스터디" },
   { to: "/blog", label: "블로그" },
   { to: "/pricing", label: "요금제" },
-  { to: "/about", label: "회사 소개" },
   { to: "/contact", label: "문의" },
 ];
 

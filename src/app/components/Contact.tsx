@@ -63,6 +63,31 @@ export function Contact() {
       return;
     }
 
+    // 모든 문의를 구글 시트에 한 줄씩 기록 (Apps Script 웹앱 웹훅)
+    // 설정: 구글 스프레드시트 → 확장 프로그램 → Apps Script에 doPost 배포 후
+    //       배포 URL을 .env 의 VITE_SHEETS_WEBHOOK_URL 에 입력
+    const sheetsWebhook = import.meta.env.VITE_SHEETS_WEBHOOK_URL as string | undefined;
+    if (sheetsWebhook) {
+      try {
+        await fetch(sheetsWebhook, {
+          method: "POST",
+          mode: "no-cors", // Apps Script 웹앱은 CORS 헤더가 없어 opaque 응답으로 전송
+          headers: { "Content-Type": "text/plain;charset=utf-8" }, // preflight 회피
+          body: JSON.stringify({
+            submittedAt: new Date().toISOString(),
+            domain: lead.domain,
+            email: lead.email,
+            company: lead.company,
+            services: lead.services,
+            budget: lead.budget,
+            message: lead.message,
+          }),
+        });
+      } catch {
+        // 시트 기록 실패가 사용자 제출 흐름을 막지 않도록 무시
+      }
+    }
+
     try {
       let delivered = false;
 
@@ -137,7 +162,7 @@ export function Contact() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 rounded-[18px] bg-[#FEE500] px-4 py-2 text-[#191600] text-[14px] font-semibold hover:brightness-95 transition"
                   >
-                    <KakaoIcon className="w-[18px] h-[18px] -ml-1" />
+                    <KakaoIcon className="w-[18px] h-[18px] -ml-2" />
                     링크프레소
                   </a>
                 </div>

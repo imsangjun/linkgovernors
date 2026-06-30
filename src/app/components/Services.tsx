@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router";
 import { ArrowUpRight } from "lucide-react";
 import { useRevealOnScroll } from "../lib/useRevealOnScroll";
@@ -59,6 +60,20 @@ const SERVICES = [
       "성과 측정 대시보드 연동",
     ],
   },
+  {
+    n: "05",
+    title: "도메인 구매 대행",
+    tagline: "안전한 출발점 확보",
+    desc:
+      "브랜드와 검색에 유리한 도메인을 찾고, 복잡한 구매·이전 과정을 대신 처리합니다. 필요하면 만료 도메인의 기존 권위까지 검토해 가장 가치 있는 출발점을 확보합니다.",
+    bullets: [
+      "브랜드 · 키워드 적합 도메인 선정",
+      "만료 도메인 권위 · 백링크 이력 검토",
+      "안전한 등록 · 소유권 이전 대행",
+      "DNS · 네임서버 초기 세팅",
+      "상표 · 분쟁 리스크 사전 점검",
+    ],
+  },
 ];
 
 // 고객 검색 의도 퍼널 — 위에서 아래로 갈수록 전환에 가까워짐
@@ -72,6 +87,17 @@ const FUNNEL = [
 export function Services() {
   useRevealOnScroll();
 
+  // 홈 등에서 /services#service-0X 로 진입하면 해당 서비스로 스크롤
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+    if (!hash) return;
+    const el = document.getElementById(hash);
+    if (el) {
+      // 레이아웃이 자리잡은 뒤 스크롤
+      requestAnimationFrame(() => el.scrollIntoView({ behavior: "smooth", block: "start" }));
+    }
+  }, []);
+
   return (
     <>
       {/* Hero */}
@@ -80,7 +106,7 @@ export function Services() {
           <div className="reveal eyebrow mb-8">서비스</div>
           <h1 className="reveal h-display text-[40px] sm:text-[56px] md:text-[80px] max-w-[18ch] ko">
             전환을 이끌어내는<br />
-            <span className="text-[#8e8e8e]">네 가지 축</span>
+            <span className="text-[#8e8e8e]">다섯 가지 축</span>
           </h1>
           <p className="reveal mt-10 text-[16px] md:text-[18px] leading-[1.65] text-[#c8c8c8] max-w-[58ch] ko">
             웹사이트의 토대부터 검색 최적화, 콘텐츠 설계까지. 만드는 단계와
@@ -89,43 +115,56 @@ export function Services() {
         </div>
       </section>
 
-      {/* Services list */}
-      {SERVICES.map((s, idx) => (
-        <section
-          key={s.n}
-          className={`py-20 md:py-32 ${idx % 2 === 1 ? "bg-[#141414] border-y border-[#262626]" : ""}`}
-        >
-          <div className="max-w-[1280px] mx-auto px-5 md:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
-              <div className="md:col-span-4">
-                <div className="reveal eyebrow tabular-nums mb-6">/ {s.n}</div>
-                <h2 className="reveal h-section text-[28px] md:text-[40px] ko">
-                  {s.title}
-                </h2>
-                <div className="reveal mt-3 text-[14px] text-[#8e8e8e] ko">
-                  {s.tagline}
-                </div>
-              </div>
-              <div className="md:col-span-8">
-                <p className="reveal text-[16px] md:text-[18px] leading-[1.7] text-[#c8c8c8] max-w-[56ch] ko">
-                  {s.desc}
-                </p>
-                <ul className="reveal mt-10 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
-                  {s.bullets.map((b) => (
-                    <li
-                      key={b}
-                      className="flex items-start gap-3 text-[14px] md:text-[15px] text-[#c8c8c8] py-3 border-b border-[#262626] ko"
-                    >
-                      <span className="mt-[7px] flex-shrink-0 w-1 h-1 rounded-full bg-[#f0f0f0]" />
-                      <span>{b}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+      {/* Services flow — 다섯 가지 축을 하나의 흐름으로 유기적으로 연결 */}
+      <section className="py-20 md:py-28">
+        <div className="max-w-[1120px] mx-auto px-5 md:px-8">
+          <h2 className="reveal h-section text-3d text-[26px] md:text-[40px] text-center ko mb-14 md:mb-20">
+            다섯 가지 축, <span className="text-[#00c800]">하나의 흐름</span>
+          </h2>
+
+          <div className="relative">
+            {/* 척추(spine) — 노드를 잇는 세로선 */}
+            <div className="absolute left-[18px] md:left-[26px] top-3 bottom-3 w-px bg-gradient-to-b from-[#00c800]/60 via-[#262626] to-[#262626]" />
+
+            <div className="space-y-7 md:space-y-10">
+              {SERVICES.map((s, idx) => (
+                <article
+                  key={s.n}
+                  id={`service-${s.n}`}
+                  className="reveal scroll-mt-24 md:scroll-mt-28 relative pl-12 md:pl-20"
+                  style={{ animationDelay: `${idx * 120}ms` }}
+                >
+                  {/* 노드 (척추 위 번호) */}
+                  <div className="absolute left-0 top-2 z-10 flex items-center justify-center w-9 h-9 md:w-[52px] md:h-[52px] rounded-full border border-[#00c800]/50 bg-[#0a0a0a] text-[#00c800] font-mono text-[13px] md:text-[16px] tabular-nums">
+                    {s.n}
+                  </div>
+
+                  {/* 카드 */}
+                  <div className="rounded-2xl border border-[#262626] bg-[#0f0f0f] p-6 md:p-10 transition-colors hover:border-[#00c800]/40">
+                    <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                      <h3 className="text-[26px] md:text-[40px] font-semibold tracking-[-0.03em] text-[#f0f0f0] ko">
+                        {s.title}
+                      </h3>
+                      <span className="text-[13px] md:text-[15px] text-[#00c800] ko">{s.tagline}</span>
+                    </div>
+                    <p className="mt-4 text-[15px] md:text-[17px] leading-[1.7] text-[#c8c8c8] max-w-[62ch] ko">
+                      {s.desc}
+                    </p>
+                    <ul className="mt-7 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2.5">
+                      {s.bullets.map((b) => (
+                        <li key={b} className="flex items-start gap-3 text-[14px] md:text-[15px] text-[#c8c8c8] ko">
+                          <span className="mt-[8px] flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#00c800]" />
+                          <span className="leading-[1.6]">{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
-        </section>
-      ))}
+        </div>
+      </section>
 
       {/* 검색 의도 4단계 퍼널 */}
       <section className="border-t border-[#262626] py-20 md:py-28 bg-[#0a0a0a]">
