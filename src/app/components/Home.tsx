@@ -28,7 +28,7 @@ function Hero() {
     <section className="relative reveal">
       <div className="max-w-[1280px] mx-auto px-5 md:px-8 pt-12 md:pt-20 pb-20 md:pb-28">
         {/* Display headline */}
-        <h1 className="reveal h-display text-3d !leading-[0.92] text-[44px] sm:text-[64px] md:text-[88px] lg:text-[104px] max-w-[16ch] ko">
+        <h1 className="reveal h-display text-3d !leading-[0.92] !tracking-[-0.015em] text-[44px] sm:text-[64px] md:text-[88px] lg:text-[104px] max-w-[16ch] ko">
           상위 노출은<br />
           우연이 아니라<br />
           <span className="text-[#00c800]">설계의</span> 결과입니다
